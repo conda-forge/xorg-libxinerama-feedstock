@@ -37,7 +37,7 @@ requirements:
   host:
     - xorg-util-macros >1.8
     - xorg-libx11 >=1.6
-    - xorg-xineramaproto >=1.1.99.1
+    - xorg-xineramaproto >=1.1.99
     - xorg-libxext
   run:
     - xorg-libxext
