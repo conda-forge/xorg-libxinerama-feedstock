@@ -2,7 +2,7 @@
 {% set xorg_category = "lib" %}
 {% set xorg_name = "libXinerama" %}
 {% set name = "xorg-" ~ xorg_name %}
-{% set am_version = "1.15" %} # keep synchronized with build.sh
+{% set am_version = "1.16" %} # keep synchronized with build.sh
 
 package:
   name: {{ name | lower }}
@@ -13,7 +13,7 @@ source:
   sha256: d9fb7f224281f5467d36f54b01a8f49e866a994410d5bce3b019f2da8bf8e643
 
 build:
-  number: 1000
+  number: 1001
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
   # Is this one line below still needed?
