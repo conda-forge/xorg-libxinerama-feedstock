@@ -45,7 +45,7 @@ else
       -I "$mprefix/share/aclocal"
   )
 fi
-am_version=1.15 # keep sync'ed with meta.yaml
+am_version=1.16 # keep sync'ed with meta.yaml
 export ACLOCAL=aclocal-$am_version
 export AUTOMAKE=automake-$am_version
 
