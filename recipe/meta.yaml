@@ -3,7 +3,7 @@
 {% set xorg_name = "libXinerama" %}
 {% set name = "xorg-" ~ xorg_name %}
 {% set am_version = "1.16" %} # keep synchronized with build.sh
-{% set am_version_win = "1.15" %}
+{% set am_version_win = "1.15" %} # keep synchronized with build.sh
 
 package:
   name: {{ name | lower }}
