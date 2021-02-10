@@ -34,6 +34,7 @@ requirements:
     - m2-libtool  # [win]
     - m2w64-pkg-config  # [win]
     - posix  # [win]
+    - make  # [not win]
   host:
     - xorg-util-macros >1.8
     - xorg-libx11 >=1.6
