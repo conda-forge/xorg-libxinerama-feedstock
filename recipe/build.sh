@@ -45,7 +45,11 @@ else
       -I "$mprefix/share/aclocal"
   )
 fi
-am_version=1.15 # keep sync'ed with meta.yaml
+if [ -n "$CYGWIN_PREFIX" ] ; then
+  am_version=1.15 # keep sync'ed with am_version_win in meta.yaml
+else
+  am_version=1.16 # keep sync'ed with am_version in meta.yaml
+fi
 export ACLOCAL=aclocal-$am_version
 export AUTOMAKE=automake-$am_version
 

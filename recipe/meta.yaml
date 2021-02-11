@@ -2,7 +2,8 @@
 {% set xorg_category = "lib" %}
 {% set xorg_name = "libXinerama" %}
 {% set name = "xorg-" ~ xorg_name %}
-{% set am_version = "1.15" %} # keep synchronized with build.sh
+{% set am_version = "1.16" %} # keep synchronized with build.sh
+{% set am_version_win = "1.15" %} # keep synchronized with build.sh
 
 package:
   name: {{ name | lower }}
@@ -13,7 +14,7 @@ source:
   sha256: d9fb7f224281f5467d36f54b01a8f49e866a994410d5bce3b019f2da8bf8e643
 
 build:
-  number: 1000
+  number: 1001
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
   # Is this one line below still needed?
@@ -30,10 +31,11 @@ requirements:
     - libtool  # [not win]
     - pkg-config  # [not win]
     - m2-autoconf  # [win]
-    - m2-automake{{ am_version }}  # [win]
+    - m2-automake{{ am_version_win }}  # [win]
     - m2-libtool  # [win]
     - m2w64-pkg-config  # [win]
     - posix  # [win]
+    - make  # [not win]
   host:
     - xorg-util-macros >1.8
     - xorg-libx11 >=1.6
