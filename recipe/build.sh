@@ -57,24 +57,15 @@ autoreconf "${autoreconf_args[@]}"
 
 
 export PKG_CONFIG_LIBDIR=$uprefix/lib/pkgconfig:$uprefix/share/pkgconfig
-if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
-    configure_args=(
-        --prefix=$mprefix
-        --disable-static
-        --disable-dependency-tracking
-        --disable-selective-werror
-        --disable-silent-rules
-    )
-else
-    echo "xorg_cv_malloc0_returns_null=yes" > arm-osx.cache
-    configure_args=(
-        --prefix=$mprefix
-        --disable-static
-        --disable-dependency-tracking
-        --disable-selective-werror
-        --disable-silent-rules
-        --cache-file=arm-osx.cache
-    )
+configure_args=(
+    --prefix=$mprefix
+    --disable-static
+    --disable-dependency-tracking
+    --disable-selective-werror
+    --disable-silent-rules
+)
+if [[ "${CONDA_BUILD_CROSS_COMPILATION}" == "1" ]]; then
+    export xorg_cv_malloc0_returns_null=yes
 fi
 
 ./configure "${configure_args[@]}"
