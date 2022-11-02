@@ -1,4 +1,4 @@
-{% set version = "1.1.4" %}
+{% set version = "1.1.5" %}
 {% set xorg_category = "lib" %}
 {% set xorg_name = "libXinerama" %}
 {% set name = "xorg-" ~ xorg_name %}
@@ -11,10 +11,10 @@ package:
 
 source:
   url: https://gitlab.freedesktop.org/xorg/lib/{{ xorg_name | lower }}/-/archive/{{ xorg_name }}-{{ version }}/{{ xorg_name | lower }}-{{ xorg_name }}-{{ version }}.tar.gz
-  sha256: d9fb7f224281f5467d36f54b01a8f49e866a994410d5bce3b019f2da8bf8e643
+  sha256: 71cce01ca3c4b5c12870f39ae2e4fa63a9bc303807f9b1c4e75ed7d122a560f9
 
 build:
-  number: 1001
+  number: 0
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
   # Is this one line below still needed?
@@ -59,7 +59,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: COPYING
-  summary: 'Client library for the Xinerama extension to the X11 protocol.'
+  summary: Client library for the Xinerama extension to the X11 protocol.
 
 
 extra:
