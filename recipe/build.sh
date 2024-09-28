@@ -1,4 +1,6 @@
-#! /bin/bash
+#!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
 set -e
 IFS=$' \t\n' # workaround for conda 4.2.13+toolchain bug
@@ -28,8 +30,6 @@ find $uprefix/. -name '*.la' -delete
 
 if [ -n "$CYGWIN_PREFIX" ] ; then
   autoreconf_args=(
-      --force
-      --install
       -I "$mprefix/share/aclocal"
       -I "$BUILD_PREFIX_M/Library/usr/share/aclocal"
   )
@@ -40,9 +40,8 @@ if [ -n "$CYGWIN_PREFIX" ] ; then
   export LDFLAGS="$LDFLAGS -L$platlibs"
 else
   autoreconf_args=(
-      --force
-      --install
-      -I "$mprefix/share/aclocal"
+      -I "${PREFIX}/share/aclocal"
+      -I "${BUILD_PREFIX}/share/aclocal"
   )
 fi
 if [ -n "$CYGWIN_PREFIX" ] ; then
@@ -53,7 +52,7 @@ fi
 export ACLOCAL=aclocal-$am_version
 export AUTOMAKE=automake-$am_version
 
-autoreconf "${autoreconf_args[@]}"
+autoreconf --force --verbose --install "${autoreconf_args[@]}"
 
 
 export PKG_CONFIG_LIBDIR=$uprefix/lib/pkgconfig:$uprefix/share/pkgconfig
@@ -66,6 +65,9 @@ configure_args=(
 )
 if [[ "${CONDA_BUILD_CROSS_COMPILATION}" == "1" ]]; then
     export xorg_cv_malloc0_returns_null=yes
+    configure_args+=(
+        --enable-malloc0returnsnull
+    )
 fi
 
 ./configure "${configure_args[@]}"
