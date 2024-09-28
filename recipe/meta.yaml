@@ -14,7 +14,7 @@ source:
   sha256: 71cce01ca3c4b5c12870f39ae2e4fa63a9bc303807f9b1c4e75ed7d122a560f9
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
   # Is this one line below still needed?
@@ -23,8 +23,10 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}    # [not win]
+    - {{ stdlib("c") }}      # [not win]
     - {{ compiler('cxx') }}  # [not win]
     - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib("m2w64_c") }}    # [win]
     - {{ compiler('m2w64_cxx') }}  # [win]
     - autoconf  # [not win]
     - automake {{ am_version }}  # [not win]
@@ -33,8 +35,8 @@ requirements:
     - m2-autoconf  # [win]
     - m2-automake{{ am_version_win }}  # [win]
     - m2-libtool  # [win]
-    - m2w64-pkg-config  # [win]
-    - posix  # [win]
+    - pkg-config  # [win]
+    - m2-base  # [win]
     - make  # [not win]
   host:
     - xorg-util-macros >1.8
