@@ -10,8 +10,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://gitlab.freedesktop.org/xorg/lib/{{ xorg_name | lower }}/-/archive/{{ xorg_name }}-{{ version }}/{{ xorg_name | lower }}-{{ xorg_name }}-{{ version }}.tar.gz
-  sha256: 71cce01ca3c4b5c12870f39ae2e4fa63a9bc303807f9b1c4e75ed7d122a560f9
+  url: https://www.x.org/releases/individual/{{ xorg_category }}/{{ xorg_name }}-{{ version }}.tar.xz
+  sha256: 5094d1f0fcc1828cb1696d0d39d9e866ae32520c54d01f618f1a3c1e30c2085c
 
 build:
   number: 1
