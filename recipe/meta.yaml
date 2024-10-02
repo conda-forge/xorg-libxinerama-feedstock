@@ -3,53 +3,51 @@
 {% set xorg_name = "libXinerama" %}
 {% set name = "xorg-" ~ xorg_name %}
 {% set am_version = "1.16" %} # keep synchronized with build.sh
-{% set am_version_win = "1.15" %} # keep synchronized with build.sh
 
 package:
   name: {{ name | lower }}
   version: {{ version }}
 
 source:
-  url: https://gitlab.freedesktop.org/xorg/lib/{{ xorg_name | lower }}/-/archive/{{ xorg_name }}-{{ version }}/{{ xorg_name | lower }}-{{ xorg_name }}-{{ version }}.tar.gz
-  sha256: 71cce01ca3c4b5c12870f39ae2e4fa63a9bc303807f9b1c4e75ed7d122a560f9
+  url: https://www.x.org/releases/individual/{{ xorg_category }}/{{ xorg_name }}-{{ version }}.tar.xz
+  sha256: 5094d1f0fcc1828cb1696d0d39d9e866ae32520c54d01f618f1a3c1e30c2085c
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
-  # Is this one line below still needed?
-  detect_binary_files_with_prefix: true
 
 requirements:
   build:
-    - {{ compiler('c') }}    # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - {{ compiler('m2w64_c') }}  # [win]
+    - m2-autoconf                  # [win]
+    - m2-automake{{ am_version }}  # [win]
+    - m2-libtool                   # [win]
+    - pkg-config                   # [unix]
+    - m2-pkg-config                # [win]
+    - gnuconfig                    # [unix]
+    - m2-base                      # [win]
+    - make                         # [unix]
+    - m2-make                      # [win]
+    - {{ compiler('c') }}          # [not win]
+    - {{ compiler('cxx') }}        # [not win]
+    - {{ stdlib('c') }}            # [not win]
+    - {{ compiler('m2w64_c') }}    # [win]
     - {{ compiler('m2w64_cxx') }}  # [win]
-    - autoconf  # [not win]
-    - automake {{ am_version }}  # [not win]
-    - libtool  # [not win]
-    - pkg-config  # [not win]
-    - m2-autoconf  # [win]
-    - m2-automake{{ am_version_win }}  # [win]
-    - m2-libtool  # [win]
-    - m2w64-pkg-config  # [win]
-    - posix  # [win]
-    - make  # [not win]
+    - {{ stdlib('m2w64_c') }}      # [win]
+    - autoconf                     # [not win]
+    - automake {{ am_version }}    # [not win]
+    - libtool                      # [not win]
   host:
-    - xorg-util-macros >1.8
-    - xorg-libx11 >=1.6
-    - xorg-xineramaproto >=1.1.99
+    - xorg-util-macros
+    - xorg-libx11
     - xorg-libxext
-  run:
-    - xorg-libxext
+    - xorg-xorgproto
 
 test:
   commands:
     {% set lib_idents = [ "Xinerama" ] %}
     {% for lib_ident in lib_idents %}
-    - test -f $PREFIX/lib/lib{{ lib_ident }}.dylib  # [osx]
-    - test -f $PREFIX/lib/lib{{ lib_ident }}.so     # [linux]
+    - test -f $PREFIX/lib/lib{{ lib_ident }}${SHLIB_EXT}                      # [unix]
     - if not exist %PREFIX%/Library/lib/lib{{ lib_ident }}.dll.a exit /b 1    # [win]
     - if not exist %PREFIX%/Library/bin/msys-{{ lib_ident }}-*.dll exit /b 1  # [win]
     {% endfor %}
@@ -60,7 +58,6 @@ about:
   license_family: MIT
   license_file: COPYING
   summary: Client library for the Xinerama extension to the X11 protocol.
-
 
 extra:
   recipe-maintainers:
