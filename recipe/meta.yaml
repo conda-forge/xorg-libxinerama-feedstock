@@ -13,7 +13,7 @@ source:
   sha256: d00fc1599c303dc5cbc122b8068bdc7405d6fcb19060f4597fc51bd3a8be51d7
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
 
