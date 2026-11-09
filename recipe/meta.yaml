@@ -13,7 +13,7 @@ source:
   sha256: d00fc1599c303dc5cbc122b8068bdc7405d6fcb19060f4597fc51bd3a8be51d7
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('xorg-libxinerama', max_pin='x.x') }}
 
@@ -50,6 +50,7 @@ test:
     - test -f $PREFIX/lib/lib{{ lib_ident }}${SHLIB_EXT}                      # [unix]
     - if not exist %PREFIX%/Library/lib/lib{{ lib_ident }}.dll.a exit /b 1    # [win]
     - if not exist %PREFIX%/Library/bin/msys-{{ lib_ident }}-*.dll exit /b 1  # [win]
+    - if exist %PREFIX%/Library/lib/lib{{ lib_ident }}.a exit /b 1            # [win]
     {% endfor %}
 
 about:

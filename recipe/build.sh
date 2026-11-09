@@ -55,6 +55,17 @@ configure_args=(
     --disable-silent-rules
 )
 
+if [ -n "$CYGWIN_PREFIX" ] ; then
+    # m2-libtool >=2.6 dropped MSYS2's `msys*` host_os patches; MSYS2 now
+    # uses the `x86_64-pc-cygwin` triplet (whose libtool branch still emits
+    # msys-*.dll names). config.guess here still reports x86_64-pc-msys, which
+    # makes libtool silently disable shared libraries, so set it explicitly.
+    configure_args+=(
+        --build=x86_64-pc-cygwin
+        --host=x86_64-pc-cygwin
+    )
+fi
+
 if [[ "${CONDA_BUILD_CROSS_COMPILATION}" == "1" ]]; then
     export xorg_cv_malloc0_returns_null=yes
     configure_args+=(
